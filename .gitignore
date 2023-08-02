@@ -3,7 +3,6 @@
 profiles.yml
 .user.yml
 logs/
-.DS_Store
 **/.DS_Store
 
 # dbt
