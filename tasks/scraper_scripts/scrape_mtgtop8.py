@@ -27,8 +27,7 @@ class Scraper:
                 arch = arch.find("div", {"style": "display:flex;"}).find(
                     "div", {"style": "width:100%;"})
                 name = arch.find("div", {"class": "S14"}).a.string
-                link = self.base_url + \
-                    arch.find("div", {"class": "S14"}).a['href']
+                link = arch.find("div", {"class": "S14"}).a['href']
                 percentage = arch.find_all("div")[1].div.string[:-2]
                 dict_archs = json_dict['archetypes']
                 dict_archs.append(
@@ -61,7 +60,7 @@ class Scraper:
                 level = len(deck[4].find_all("img"))
                 rank = deck[5].string
                 date = deck[6].string
-                link = self.base_url + deck[1].a['href']
+                link = deck[1].a['href']
                 ret_decks.append({'author': author, 'event': event,
                                  'level': level, 'rank': rank, 'date': date, 'link': link})
                 ret_decks[-1]['cards'] = self.scrape_deck(link)
