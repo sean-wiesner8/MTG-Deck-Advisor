@@ -10,6 +10,10 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
+# Unzip install for Terraform
+RUN apt-get update \
+  && sudo apt-get install unzip
+
 # RUN apt-get update \
 #   && apt-get install -y wget \
 #   && rm -rf /var/lib/apt/lists/*
