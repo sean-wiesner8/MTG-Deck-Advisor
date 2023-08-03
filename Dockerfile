@@ -10,9 +10,11 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# Unzip install for Terraform
+# Install terraform
 RUN apt-get update \
-  && sudo apt-get install unzip
+  && sudo apt-get install unzip \
+  && unzip /opt/airflow/tasks/extras/terraform_1.5.4_linux_arm64.zip -d /usr/local/bin
+RUN terraform --version
 
 # RUN apt-get update \
 #   && apt-get install -y wget \

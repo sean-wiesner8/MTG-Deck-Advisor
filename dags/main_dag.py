@@ -15,6 +15,11 @@ with DAG(
     catchup=True,
 ) as dag:
 
+    install_terraform = BashOperator(
+        task_id="install_terraform",
+        bash_command="chmod +x /opt/airflow/tasks/bash_scripts/install_terraform.sh && /opt/airflow/tasks/bash_scripts/install_terraform.sh ", do_xcom_push=True,
+    )
+
     # scrape_untapped_data = BashOperator(
     #     task_id="scrape_untapped_data",
     #     bash_command="chmod +x /opt/airflow/tasks/bash_scripts/scrape_untapped.sh && /opt/airflow/tasks/bash_scripts/scrape_untapped.sh ", do_xcom_push=True,
@@ -31,7 +36,8 @@ with DAG(
     )
 
 (
+    install_terraform
     # scrape_untapped_data
-    scrape_mtg_data
+    >> scrape_mtg_data
     >> scrape_mtgtop8_data
 )
