@@ -8,6 +8,8 @@ beautifulsoup4 = "*"
 requests = "*"
 pandas = "*"
 pyperclip = "*"
+boto3 = "*"
+python-dotenv = "*"
 
 
 [requires]
