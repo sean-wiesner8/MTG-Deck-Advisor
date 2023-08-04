@@ -7,7 +7,7 @@ from botocore.exceptions import NoCredentialsError
 def data_lake_upload():
     # load config
     script_path = os.getcwd()
-    config = dotenv_values(f"{script_path}/configuration.env")
+    config = dotenv_values("/opt/airflow/tasks/configuration.env")
     print(f"config: {config}")
 
     # get upload files
@@ -16,6 +16,7 @@ def data_lake_upload():
 
     # set config variables
     AWS_BUCKET = config["s3-bucket"]
+    print(AWS_BUCKET)
 
     def connect_s3():
         """
@@ -25,7 +26,8 @@ def data_lake_upload():
             connection to the S3 bucket
         """
         try:
-            s3_conn = boto3.resource("s3")
+            s3_conn = boto3.resource(
+                "s3", aws_access_key_id=config["aws_access_key_id"], aws_secret_access_key=config["aws_secret_access_key"])
             return s3_conn
         except NoCredentialsError as e:
             raise (e)
@@ -37,7 +39,7 @@ def data_lake_upload():
         s3_conn = connect_s3()
         for file in files:
             s3_conn.meta.client.upload_file(
-                Filename=f"{script_path}/{file}", Bucket=AWS_BUCKET, Key=file)
+                Filename=f"/opt/airflow/tasks/{file}", Bucket=AWS_BUCKET, Key=file)
 
     upload_csv_s3()
 
