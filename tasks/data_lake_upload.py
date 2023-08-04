@@ -1,4 +1,3 @@
-import os
 import boto3
 from dotenv import dotenv_values
 from botocore.exceptions import NoCredentialsError
@@ -6,7 +5,6 @@ from botocore.exceptions import NoCredentialsError
 
 def data_lake_upload():
     # load config
-    script_path = os.getcwd()
     config = dotenv_values("/opt/airflow/tasks/configuration.env")
     print(f"config: {config}")
 
