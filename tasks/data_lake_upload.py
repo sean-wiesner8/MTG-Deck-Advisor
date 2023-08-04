@@ -8,6 +8,7 @@ def data_lake_upload():
     # load config
     script_path = os.getcwd()
     config = dotenv_values(f"{script_path}/configuration.env")
+    print(f"config: {config}")
 
     # get upload files
     files = [f"scraper_scripts/mtgtop8_data.json",
