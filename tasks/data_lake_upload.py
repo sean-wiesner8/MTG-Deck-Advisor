@@ -11,8 +11,8 @@ def data_lake_upload():
     print(f"config: {config}")
 
     # get upload files
-    files = [f"scraper_scripts/mtgtop8_data.json",
-             f"scraper_scripts/standard_cards.json"]
+    files = ["scraper_scripts/mtgtop8_data.json",
+             "scraper_scripts/standard_cards.json"]
 
     # set config variables
     AWS_BUCKET = config["s3-bucket"]
