@@ -8,8 +8,8 @@ def data_lake_upload():
     config = dotenv_values("/opt/airflow/tasks/configuration.env")
 
     # get upload files
-    files = ["scraper_scripts/tmp/mtgtop8_data.json",
-             "scraper_scripts/tmp/standard_cards.json"]
+    files = ["tmp/mtgtop8_data.json",
+             "tmp/standard_cards.json"]
 
     # set config variables
     AWS_BUCKET = config["s3-bucket"]

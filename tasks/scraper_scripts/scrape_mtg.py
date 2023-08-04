@@ -27,8 +27,7 @@ class Scraper:
 
 def scrape_mtg():
     cards = Scraper.get_standard_cards()
-    curr_path = os.getcwd()
-    new_path = f'{curr_path}/tmp'
+    new_path = '/opt/airflow/tasks/tmp'
     if not os.path.isdir(new_path):
         os.makedirs(new_path)
     os.chdir(new_path)
