@@ -16,7 +16,8 @@ def data_lake_upload():
 
     # set config variables
     AWS_BUCKET = config["s3-bucket"]
-    print(AWS_BUCKET)
+    AWS_ACCESS_KEY_ID = config["aws_access_key_id"]
+    AWS_SECRET_ACCESS_KEY = config["aws_secret_access_key"]
 
     def connect_s3():
         """
@@ -27,7 +28,7 @@ def data_lake_upload():
         """
         try:
             s3_conn = boto3.resource(
-                "s3", aws_access_key_id=config["aws_access_key_id"], aws_secret_access_key=config["aws_secret_access_key"])
+                "s3", aws_access_key_id=AWS_ACCESS_KEY_ID, aws_secret_access_key=AWS_SECRET_ACCESS_KEY)
             return s3_conn
         except NoCredentialsError as e:
             raise (e)
