@@ -26,7 +26,7 @@ class Scraper:
 
 def scrape_mtg():
     cards = Scraper.get_standard_cards()
-    with open('standard_cards.json', 'w', encoding='utf-8') as f:
+    with open('/tmp/standard_cards.json', 'w', encoding='utf-8') as f:
         json.dump(cards, f, ensure_ascii=False, indent=4)
 
 

@@ -6,11 +6,10 @@ from botocore.exceptions import NoCredentialsError
 def data_lake_upload():
     # load config
     config = dotenv_values("/opt/airflow/tasks/configuration.env")
-    print(f"config: {config}")
 
     # get upload files
-    files = ["scraper_scripts/mtgtop8_data.json",
-             "scraper_scripts/standard_cards.json"]
+    files = ["scraper_scripts/tmp/mtgtop8_data.json",
+             "scraper_scripts/tmp/standard_cards.json"]
 
     # set config variables
     AWS_BUCKET = config["s3-bucket"]
