@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 
 class Scraper:
@@ -26,7 +27,12 @@ class Scraper:
 
 def scrape_mtg():
     cards = Scraper.get_standard_cards()
-    with open('/tmp/standard_cards.json', 'w', encoding='utf-8') as f:
+    curr_path = os.getcwd()
+    new_path = f'{curr_path}/tmp'
+    if not os.path.isdir(new_path):
+        os.makedirs(new_path)
+    os.chdir(new_path)
+    with open('standard_cards.json', 'w', encoding='utf-8') as f:
         json.dump(cards, f, ensure_ascii=False, indent=4)
 
 
