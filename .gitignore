@@ -4,6 +4,7 @@ profiles.yml
 .user.yml
 logs/
 **/.DS_Store
+**/tmp/*
 
 # dbt
 **target/

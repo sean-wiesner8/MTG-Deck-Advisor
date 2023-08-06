@@ -13,6 +13,8 @@ class Scraper:
         url = self.base_url + endpoint
         try:
             response = requests.get(url)
+            response.raise_for_status()
+            response = response.content.decode('utf8')
             soup = BeautifulSoup(response.text, "html.parser")
 
         except requests.exceptions.RequestException as e:
