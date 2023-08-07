@@ -1,15 +1,19 @@
 import boto3
 from dotenv import dotenv_values
 from botocore.exceptions import NoCredentialsError
+import sys
+import os
 
 
-def data_lake_upload():
+def data_lake_upload(stage):
     # load config
-    config = dotenv_values("/opt/airflow/tasks/configuration.env")
+
+    curr_dir = os.getcwd()
+    config = dotenv_values(f"{curr_dir}/configuration.env")
 
     # get upload files
-    files = ["tmp/mtgtop8_data.json",
-             "tmp/standard_cards.json"]
+    files = ["mtgtop8_data.json",
+             "standard_cards.json"]
 
     # set config variables
     AWS_BUCKET = config["s3-bucket"]
@@ -37,13 +41,14 @@ def data_lake_upload():
         s3_conn = connect_s3()
         for file in files:
             s3_conn.meta.client.upload_file(
-                Filename=f"/opt/airflow/tasks/{file}", Bucket=AWS_BUCKET, Key=file)
+                Filename=f"{curr_dir}/tmp/{file}", Bucket=AWS_BUCKET, Key=f"{stage}/{file}")
 
     upload_csv_s3()
 
 
 def main():
-    data_lake_upload()
+    stage = sys.argv[1]
+    data_lake_upload(stage)
 
 
 if __name__ == "__main__":

@@ -1,33 +1,30 @@
-resource "aws_db_instance" "rds_instance" {
-  allocated_storage = 20
-  identifier        = "rds-terraform"
-  instance_class    = "db.t3.micro"
-  engine            = "postgres"
-  engine_version    = "14.7"
+resource "aws_security_group" "rds" {
+  name = "mtg-rds"
 
-  db_name  = "mtgAppDB"
-  username = "mtgdbadmin"
-  password = var.rds_password
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-
-  publicly_accessible    = true
-  skip_final_snapshot    = true
-  vpc_security_group_ids = [aws_security_group.rds_security_group.id]
-
+  egress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
 
-resource "aws_security_group" "rds_security_group" {
-  name = "rds_security_group"
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_db_instance" "mtg_db" {
+  identifier             = "mtg-db"
+  instance_class         = "db.t3.micro"
+  allocated_storage      = 20
+  engine                 = "postgres"
+  engine_version         = "14.7"
+  username               = "mtg_project"
+  password               = var.db_password
+  vpc_security_group_ids = [aws_security_group.rds.id]
+  publicly_accessible    = true
+  skip_final_snapshot    = true
 }

@@ -2,11 +2,12 @@ import json
 import pandas as pd
 from pydantic import ValidationError
 from pydantic_models import MTGData, MTGTop8Data, MTGTop8DataDeck
+import os
 
 
 def parse_data_mtg():
 
-    with open('tmp/standard_cards.json') as f:
+    with open('tmp/standard_cards_old.json') as f:
         mtg_data = json.load(f)["all_cards"]
     mtg_data = pd.concat([pd.DataFrame(page["data"]) for page in mtg_data])
 
@@ -41,10 +42,20 @@ def validate_mtgtop8(data):
 
 
 def main():
-    data = parse_data_mtg()
-    validate_mtg(data)
-    data = parse_data_mtgtop8()
-    validate_mtgtop8(data)
+    valid_mtg_data = parse_data_mtg()
+    validate_mtg(valid_mtg_data)
+    valid_mtgtop8_data = parse_data_mtgtop8()
+    validate_mtgtop8(valid_mtgtop8_data)
+
+    curr_dir = os.getcwd()
+    data_path = curr_dir + "/tmp"
+    os.chdir(data_path)
+
+    with open('standard_cards_prep.json', 'w', encoding='utf-8') as f:
+        json.dump(valid_mtg_data, f, ensure_ascii=False, indent=4)
+
+    with open('mtgtop8_data_prep.json', 'w', encoding='utf-8') as f:
+        json.dump(valid_mtgtop8_data, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == "__main__":

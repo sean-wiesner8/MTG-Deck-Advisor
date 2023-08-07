@@ -11,6 +11,7 @@ class MTGTop8Data(BaseModel):
 
 
 class MTGTop8DataDeck(BaseModel):
+
     author: str
     event: str
     level: int
