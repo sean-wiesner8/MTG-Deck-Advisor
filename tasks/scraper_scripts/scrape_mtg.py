@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 
 class Scraper:
@@ -7,12 +8,23 @@ class Scraper:
     def get_standard_cards():
 
         try:
+            base_url = 'http://api.scryfall.com/cards/search?q=legal:standard'
             response = requests.get(
-                'http://api.scryfall.com/cards/search?q=legal:standard', timeout=10)
+                base_url, timeout=10)
             response.raise_for_status()
             response = response.content.decode('utf8')
             data = json.loads(response)
-            return data
+            data_list = [data]
+            curr_page = 1
+            while data["has_more"]:
+                curr_page += 1
+                response = requests.get(
+                    base_url + f"&page={curr_page}", timeout=10)
+                response.raise_for_status()
+                response = response.content.decode('utf8')
+                data = json.loads(response)
+                data_list.append(data)
+            return data_list
 
         except requests.exceptions.HTTPError as errh:
             print(errh)
@@ -26,6 +38,12 @@ class Scraper:
 
 def scrape_mtg():
     cards = Scraper.get_standard_cards()
+    cards = {"all_cards": cards}
+    print(cards)
+    new_path = '/opt/airflow/tasks/tmp'
+    if not os.path.isdir(new_path):
+        os.makedirs(new_path)
+    os.chdir(new_path)
     with open('standard_cards.json', 'w', encoding='utf-8') as f:
         json.dump(cards, f, ensure_ascii=False, indent=4)
 

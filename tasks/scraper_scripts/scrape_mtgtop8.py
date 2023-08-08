@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import json
+import os
 
 
 class Scraper:
@@ -12,6 +13,8 @@ class Scraper:
         url = self.base_url + endpoint
         try:
             response = requests.get(url)
+            response.raise_for_status()
+            response = response.content.decode('utf8')
             soup = BeautifulSoup(response.text, "html.parser")
 
         except requests.exceptions.RequestException as e:
@@ -100,6 +103,8 @@ class Scraper:
 def main():
     scraper = Scraper()
     data = scraper.scrape_all('format?f=ST')
+    new_path = '/opt/airflow/tasks/tmp'
+    os.chdir(new_path)
     with open('mtgtop8_data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
