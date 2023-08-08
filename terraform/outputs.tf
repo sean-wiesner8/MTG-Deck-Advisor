@@ -11,6 +11,11 @@ output "rds_database_name" {
   value       = aws_db_instance.mtg_db.db_name
 }
 
+output "rds_hostname" {
+  description = "RDS instance hostname"
+  value       = aws_db_instance.mtg_db.address
+}
+
 output "rds_instance_endpoint" {
   description = "Endpoint of the RDS cluster"
   value       = aws_db_instance.mtg_db.endpoint

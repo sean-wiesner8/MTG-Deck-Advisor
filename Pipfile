@@ -10,6 +10,7 @@ pandas = "*"
 pyperclip = "*"
 boto3 = "*"
 python-dotenv = "*"
+pydantic = "*"
 
 
 [requires]

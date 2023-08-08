@@ -35,9 +35,15 @@ with DAG(
         bash_command="python /opt/airflow/tasks/data_lake_upload.py ",
     )
 
+    validate_data = BashOperator(
+        task_id="validate_data",
+        bash_command="python /opt/airflow/tasks/validate.py ",
+    )
+
 (
     # scrape_untapped_data
     scrape_mtg_data
     >> scrape_mtgtop8_data
     >> upload_to_s3
+    >> validate_data
 )

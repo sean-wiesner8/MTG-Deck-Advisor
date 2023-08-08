@@ -22,6 +22,7 @@ resource "aws_db_instance" "mtg_db" {
   allocated_storage      = 20
   engine                 = "postgres"
   engine_version         = "14.7"
+  db_name                = "mtg_db"
   username               = "mtg_project"
   password               = var.db_password
   vpc_security_group_ids = [aws_security_group.rds.id]

@@ -40,6 +40,7 @@ class MTGData(BaseModel):
     rarity: str
     flavor_text: str
     artist: str
-    prices: dict[str, str | None, str | None, str, str | None, str | None]
+    prices: dict[str, Optional[str], Optional[str],
+                 str, Optional[str], Optional[str]]
     power: Optional[str]
     toughness: Optional[str]
