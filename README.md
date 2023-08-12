@@ -12,6 +12,7 @@
 - MTG Cards scraper using the Scryfall API
 - upload raw data to data lake task
 - validate data with pydantic task
+- convert raw json data to prep data with tabular, relational SQL format with pandas
 - upload prep data to data lake task
 
 ### Unfinished:

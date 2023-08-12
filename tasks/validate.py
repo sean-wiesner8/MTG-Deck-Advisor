@@ -201,6 +201,10 @@ def main():
 
     tabular_data = data_to_table(mtg_data, mtgtop8_data)
 
+    # remove ids for csv formatting
+    for key in tabular_data:
+        tabular_data[key] = tabular_data[key].drop('id', axis=1)
+
     os.chdir(f"{os.getcwd()}/tmp")
     for key in tabular_data:
         tabular_data[key].to_csv(key)
