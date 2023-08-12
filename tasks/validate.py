@@ -8,8 +8,7 @@ from copy import deepcopy
 
 def parse_data_mtg():
 
-    curr_dir = os.getcwd()
-    os.chdir(curr_dir)
+    # os.chdir(curr_dir)
     # os.chdir('/opt/airflow/tasks')
     with open('tmp/standard_cards.json') as f:
         mtg_data_raw = json.load(f)["all_cards"]
@@ -47,6 +46,8 @@ def parse_data_mtgtop8():
 
 def validate_mtg(data):
 
+    data = data.to_dict('records')
+
     try:
         [MTGData(**card) for card in data]
     except ValidationError as e:
@@ -55,10 +56,13 @@ def validate_mtg(data):
 
 def validate_mtgtop8(data):
 
+    data = data.to_dict('records')
+
     try:
         for arch in data:
             MTGTop8Data(**arch)
-            [MTGTop8DataDeck(**deck) for deck in arch['decks']]
+            for deck in arch['decks']:
+                MTGTop8DataDeck(**deck)
     except ValidationError as e:
         print(e.errors())
 
@@ -188,7 +192,14 @@ def data_to_table(mtg_data, mtgtop8_data):
 
 
 def main():
-    tabular_data = data_to_table(parse_data_mtg(), parse_data_mtgtop8())
+
+    mtg_data = parse_data_mtg()
+    mtgtop8_data = parse_data_mtgtop8()
+
+    validate_mtg(mtg_data)
+    validate_mtgtop8(mtgtop8_data)
+
+    tabular_data = data_to_table(mtg_data, mtgtop8_data)
 
     os.chdir(f"{os.getcwd()}/tmp")
     for key in tabular_data:

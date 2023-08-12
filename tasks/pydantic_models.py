@@ -30,8 +30,7 @@ class MTGData(BaseModel):
     mana_cost: str
     type_line: str
     oracle_text: str
-    colors: List[str]
-    color_identity: List[str]
+    colors: List[str] | float
     keywords: List[str]
     set_id: str
     set: str

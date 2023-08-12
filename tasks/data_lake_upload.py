@@ -5,18 +5,14 @@ import sys
 import os
 
 
-def data_lake_upload(stage):
+def data_lake_upload(stage, files):
     # load config
 
     curr_dir = os.getcwd()
     config = dotenv_values(f"{curr_dir}/configuration.env")
 
-    # get upload files
-    files = ["mtgtop8_data.json",
-             "standard_cards.json"]
-
     # set config variables
-    AWS_BUCKET = config["s3-bucket"]
+    AWS_BUCKET = config["s3_bucket"]
     AWS_ACCESS_KEY_ID = config["aws_access_key_id"]
     AWS_SECRET_ACCESS_KEY = config["aws_secret_access_key"]
 
@@ -48,7 +44,13 @@ def data_lake_upload(stage):
 
 def main():
     stage = sys.argv[1]
-    data_lake_upload(stage)
+    files = None
+    if stage == "raw":
+        files = ["standard_cards.json", "mtgtop8_data.json"]
+    else:
+        files = ["arch_data", "card_color_data", "card_data", "card_keyword_data",
+                 "cardcount_data", "color_data", "deck_data", "keyword_data", "price_data"]
+    data_lake_upload(stage, files)
 
 
 if __name__ == "__main__":
