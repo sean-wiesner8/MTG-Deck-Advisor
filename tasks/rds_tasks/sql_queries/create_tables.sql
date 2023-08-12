@@ -71,13 +71,16 @@ CREATE TABLE IF NOT EXISTS Deck(
   rank varchar(5),
   date_used varchar(25),
   link varchar(255),
-  archetype_id int NOT NULL
+  archetype_id int NOT NULL,
+  FOREIGN KEY (archetype_id) REFERENCES Archetype(id)
 );
 
-CREATE TABLE IF NOT EXISTS DeckCardJoin(
-  deck_id int NOT NULL,
+CREATE TABLE IF NOT EXISTS CardCount(
+  id int NOT NULL PRIMARY KEY,
   card_id int NOT NULL,
-  FOREIGN KEY (deck_id) REFERENCES Deck(id),
-  FOREIGN KEY (card_id) REFERENCES Card(id)
+  FOREIGN KEY (card_id) REFERENCES Card(id),
+  count varchar(4),
+  deck_id int NOT NULL,
+  FOREIGN KEY (deck_id) REFERENCES Deck(id)
 );
 
