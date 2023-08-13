@@ -22,7 +22,7 @@ def parse_data_mtg():
     mtg_data = pd.DataFrame(mtg_data)
 
     remove_list = ['object', 'oracle_id', 'multiverse_ids', 'mtgo_id', 'arena_id', 'tcgplayer_id', 'cardmarket_id', 'lang', 'layout', 'highres_image', 'image_status', 'image_uris', 'finishes', 'set_search_uri',
-                   'scryfall_set_uri', 'rulings_uri', 'prints_search_uri', 'collector_number', 'digital', 'full_art', 'textless', 'booster', 'story_spotlight', 'edhrec_rank', 'related_uris', 'purchase_uris', 'card_faces', 'loyalty', 'watermark', 'all_parts', 'frame_effects', 'security_stamp', 'cmc', 'legalities', 'games', 'reserved', 'foil', 'nonfoil', 'oversized', 'promo', 'reprint', 'variation', 'set_type', 'card_back_id', 'artist_ids', 'illustration_id', 'border_color', 'frame', 'penny_rank', 'preview', 'color_indicator', 'produced_mana', 'color_identity', 'id']
+                   'scryfall_set_uri', 'rulings_uri', 'prints_search_uri', 'collector_number', 'digital', 'full_art', 'textless', 'booster', 'story_spotlight', 'edhrec_rank', 'related_uris', 'purchase_uris', 'card_faces', 'loyalty', 'watermark', 'all_parts', 'frame_effects', 'security_stamp', 'cmc', 'legalities', 'games', 'reserved', 'foil', 'nonfoil', 'oversized', 'promo', 'reprint', 'variation', 'set_type', 'card_back_id', 'artist_ids', 'illustration_id', 'border_color', 'frame', 'penny_rank', 'preview', 'color_indicator', 'produced_mana', 'color_identity', 'id', 'set']
     mtg_data = mtg_data.drop(remove_list, axis=1)
     ids = pd.Series(mtg_data.index.to_list())
     mtg_data.insert(0, "id", ids)
@@ -99,8 +99,6 @@ def data_to_table(mtg_data, mtgtop8_data):
     mtg_data.apply(add_card_color, axis=1)
     card_color_data = pd.DataFrame(
         list(card_color_set), columns=['card_id', 'color_id'])
-    card_color_ids = pd.Series(card_color_data.index.to_list())
-    card_color_data.insert(0, "id", card_color_ids)
 
     # keywords data
     keywords_data = mtg_data['keywords']
@@ -125,8 +123,6 @@ def data_to_table(mtg_data, mtgtop8_data):
     mtg_data.apply(add_card_keyword, axis=1)
     card_keyword_data = pd.DataFrame(
         list(card_keyword_set), columns=['card_id', 'keyword_id'])
-    card_keyword_ids = pd.Series(card_keyword_data.index.to_list())
-    card_keyword_data.insert(0, "id", card_keyword_ids)
 
     # prices data
     prices_data_lst = []
@@ -201,13 +197,9 @@ def main():
 
     tabular_data = data_to_table(mtg_data, mtgtop8_data)
 
-    # remove ids for csv formatting
-    for key in tabular_data:
-        tabular_data[key] = tabular_data[key].drop('id', axis=1)
-
     os.chdir(f"{os.getcwd()}/tmp")
     for key in tabular_data:
-        tabular_data[key].to_csv(key)
+        tabular_data[key].to_csv(f"{key}.csv", index=False)
 
 
 if __name__ == "__main__":

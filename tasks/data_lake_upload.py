@@ -37,7 +37,7 @@ def data_lake_upload(stage, files):
         s3_conn = connect_s3()
         for file in files:
             s3_conn.meta.client.upload_file(
-                Filename=f"{curr_dir}/tmp/{file}", Bucket=AWS_BUCKET, Key=f"{stage}/{file}")
+                Filename=f"{curr_dir}/tmp/{file}", Bucket=AWS_BUCKET, Key=file)
 
     upload_csv_s3()
 
@@ -48,8 +48,8 @@ def main():
     if stage == "raw":
         files = ["standard_cards.json", "mtgtop8_data.json"]
     else:
-        files = ["arch_data", "card_color_data", "card_data", "card_keyword_data",
-                 "cardcount_data", "color_data", "deck_data", "keyword_data", "price_data"]
+        files = ["arch_data.csv", "card_color_data.csv", "card_data.csv", "card_keyword_data.csv",
+                 "cardcount_data.csv", "color_data.csv", "deck_data.csv", "keyword_data.csv", "price_data.csv"]
     data_lake_upload(stage, files)
 
 

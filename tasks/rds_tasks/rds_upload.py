@@ -36,7 +36,15 @@ def main():
     cursor = conn.cursor()
 
     create_tables_query = prepare_query("create_tables")
+    load_temp_tables_query = prepare_query("load_temp_tables").format(
+        s3_bucket=config["s3_bucket"],
+        aws_region=config["aws_region"],
+        aws_access_key_id=config["aws_access_key_id"],
+        aws_secret_access_key=config["aws_secret_access_key"],
+    )
+
     cursor.execute(create_tables_query)
+    cursor.execute(load_temp_tables_query)
 
     conn.commit()
     cursor.close()

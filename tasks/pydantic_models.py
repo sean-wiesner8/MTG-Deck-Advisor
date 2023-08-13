@@ -33,7 +33,6 @@ class MTGData(BaseModel):
     colors: List[str] | float
     keywords: List[str]
     set_id: str
-    set: str
     set_name: str
     set_uri: str
     rarity: str
