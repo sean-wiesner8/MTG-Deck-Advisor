@@ -42,9 +42,11 @@ def main():
         aws_access_key_id=config["aws_access_key_id"],
         aws_secret_access_key=config["aws_secret_access_key"],
     )
+    load_main_tables_query = prepare_query("load_main_tables")
 
     cursor.execute(create_tables_query)
     cursor.execute(load_temp_tables_query)
+    cursor.execute(load_main_tables_query)
 
     conn.commit()
     cursor.close()

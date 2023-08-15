@@ -184,7 +184,10 @@ def data_to_table(mtg_data, mtgtop8_data):
     cardcount_data_ids = pd.Series(cardcount_data.index.to_list())
     cardcount_data.insert(0, "id", cardcount_data_ids)
 
-    return {"card_data": card_data, "color_data": color_data, "card_color_data": card_color_data, "keyword_data": keyword_data, "card_keyword_data": card_keyword_data, "price_data": price_data, "arch_data": arch_data, "deck_data": deck_data, "cardcount_data": cardcount_data}
+    processed_data = {"card_data": card_data, "color_data": color_data, "card_color_data": card_color_data, "keyword_data": keyword_data,
+                      "card_keyword_data": card_keyword_data, "price_data": price_data, "arch_data": arch_data, "deck_data": deck_data, "cardcount_data": cardcount_data}
+
+    return processed_data
 
 
 def main():
