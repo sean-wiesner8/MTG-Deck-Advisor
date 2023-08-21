@@ -23,7 +23,6 @@ class MTGTop8DataDeck(BaseModel):
 
 class MTGData(BaseModel):
 
-    id: str
     name: str
     released_at: str
     uri: str

@@ -1,22 +1,22 @@
 CREATE EXTENSION IF NOT EXISTS aws_s3 CASCADE;
 
-CREATE TABLE Card_temp (LIKE Card);
+CREATE TEMP TABLE Card_temp (LIKE Card);
 
-CREATE TABLE Color_temp (LIKE Color);
+CREATE TEMP TABLE Color_temp (LIKE Color);
 
-CREATE TABLE CardColorJoin_temp (LIKE CardColorJoin);
+CREATE TEMP TABLE CardColorJoin_temp (LIKE CardColorJoin);
 
-CREATE TABLE Keyword_temp (LIKE Keyword);
+CREATE TEMP TABLE Keyword_temp (LIKE Keyword);
 
-CREATE TABLE CardKeywordJoin_temp (LIKE CardKeywordJoin);
+CREATE TEMP TABLE CardKeywordJoin_temp (LIKE CardKeywordJoin);
 
-CREATE TABLE Prices_temp (LIKE Prices);
+CREATE TEMP TABLE Prices_temp (LIKE Prices);
 
-CREATE TABLE Archetype_temp (LIKE Archetype);
+CREATE TEMP TABLE Archetype_temp (LIKE Archetype);
 
-CREATE TABLE Deck_temp (LIKE Deck);
+CREATE TEMP TABLE Deck_temp (LIKE Deck);
 
-CREATE TABLE CardCount_temp (LIKE CardCount);
+CREATE TEMP TABLE CardCount_temp (LIKE CardCount);
 
 SELECT
     aws_s3.table_import_from_s3(
