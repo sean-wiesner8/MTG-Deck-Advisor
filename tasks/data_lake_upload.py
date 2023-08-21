@@ -5,7 +5,7 @@ import sys
 import os
 
 
-def data_lake_upload(stage, files):
+def data_lake_upload(files):
     # load config
 
     curr_dir = os.getcwd()
@@ -50,7 +50,7 @@ def main():
     else:
         files = ["arch_data.csv", "card_color_data.csv", "card_data.csv", "card_keyword_data.csv",
                  "cardcount_data.csv", "color_data.csv", "deck_data.csv", "keyword_data.csv", "price_data.csv"]
-    data_lake_upload(stage, files)
+    data_lake_upload(files)
 
 
 if __name__ == "__main__":

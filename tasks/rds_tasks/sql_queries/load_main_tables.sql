@@ -27,7 +27,7 @@ DELETE FROM Deck WHERE id IN (
   SELECT t1.id
   FROM Deck t1
       LEFT JOIN CardCount t2 ON t1.id = t2.deck_id
-WHERE t2.id IS NULL
+WHERE t2.card_id IS NULL
 );
 
 TRUNCATE Prices;
@@ -42,7 +42,12 @@ WHERE t2.id IS NULL
 --load new cards from temp that aren't already in main
 INSERT INTO Card (id, name, released_at, uri, scryfall_uri, mana_cost, type_line, oracle_text, set_id, set_name, set_uri, rarity, flavor_text, artist, power, toughness)
 SELECT t1.id, t1.name, t1.released_at, t1.uri, t1.scryfall_uri, t1.mana_cost, t1.type_line, t1.oracle_text, t1.set_id, t1.set_name, t1.set_uri, t1.rarity, t1.flavor_text, t1.artist, t1.power, t1.toughness FROM Card_temp t1
-      LEFT JOIN Card t2 ON t1.name = t2.name
+      LEFT JOIN Card t2 ON t1.id = t2.id
+WHERE t2.id IS NULL;
+
+INSERT INTO Color (id, mtg_id)
+SELECT t1.id, t1.mtg_id FROM Color_temp t1
+      LEFT JOIN Color t2 ON t1.id = t2.id
 WHERE t2.id IS NULL;
 
 INSERT INTO CardColorJoin (card_id, color_id)
@@ -52,7 +57,7 @@ WHERE t2.card_id IS NULL;
 
 INSERT INTO Keyword (id, name)
 SELECT t1.id, t1.name FROM Keyword_temp t1
-      LEFT JOIN Keyword t2 ON t1.name = t2.name
+      LEFT JOIN Keyword t2 ON t1.id = t2.id
 WHERE t2.id IS NULL;
 
 INSERT INTO CardKeywordJoin (card_id, keyword_id)
@@ -65,20 +70,18 @@ SELECT * FROM Prices_temp;
 
 INSERT INTO Archetype (id, name, endpoint, percentage)
 SELECT t1.id, t1.name, t1.endpoint, t1.percentage FROM Archetype_temp t1
-      LEFT JOIN Archetype t2 ON t1.name = t2.name
+      LEFT JOIN Archetype t2 ON t1.id = t2.id
 WHERE t2.id IS NULL;
 
 INSERT INTO Deck (id, author, event_name, lvl, rank, date_used, link, archetype_id)
-SELECT t1.id, t1.author, t1.event_name, t1.lvl, t1.rank, t1.date_used, t1.link, t1.archetype_id FROM Archetype_temp t1
-      LEFT JOIN Archetype t2 ON t1.link = t2.link
+SELECT t1.id, t1.author, t1.event_name, t1.lvl, t1.rank, t1.date_used, t1.link, t1.archetype_id FROM Deck_temp t1
+      LEFT JOIN Deck t2 ON t1.id = t2.id
 WHERE t2.id IS NULL;
 
-INSERT INTO CardCount (id, card_id, count, deck_id)
-SELECT t1.id, t1.card_id, t1.count, t1.deck_id FROM CardCount_temp t1
+INSERT INTO CardCount (card_id, count, deck_id)
+SELECT t1.card_id, t1.count, t1.deck_id FROM CardCount_temp t1
       LEFT JOIN CardCount t2 ON t1.card_id = t2.card_id AND t1.deck_id = t2.deck_id
 WHERE t2.card_id IS NULL;
-
-
 
 
 END TRANSACTION;
