@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS Deck(
   author varchar(100),
   event_name varchar(100),
   lvl int,
-  rank varchar(5),
+  rank int,
   date_used varchar(25),
   link varchar(255),
   archetype_id varchar(255) NOT NULL,

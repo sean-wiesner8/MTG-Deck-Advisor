@@ -15,7 +15,7 @@ class MTGTop8DataDeck(BaseModel):
     author: str
     event: str
     level: int
-    rank: str
+    rank: int
     date: str
     link: str
     cards: List[dict[str, str]]

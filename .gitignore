@@ -6,6 +6,9 @@ logs/
 **/.DS_Store
 **/tmp/*
 
+# app for now
+**/app/*
+
 # dbt
 **target/
 **dbt_packages/

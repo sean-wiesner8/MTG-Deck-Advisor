@@ -60,7 +60,7 @@ class Scraper:
                 author = deck[2].string
                 event = deck[3].string
                 level = len(deck[4].find_all("img"))
-                rank = deck[5].string
+                rank = int(deck[5].string[0])
                 date = deck[6].string
                 link = deck[1].a['href']
                 ret_decks.append({'author': author, 'event': event,
