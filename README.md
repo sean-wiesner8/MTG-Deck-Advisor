@@ -14,12 +14,11 @@
 - validate data with pydantic task
 - convert raw json data to prep data with tabular, relational SQL format with pandas
 - upload prep data to data lake task
+- create tables and load data into application database task
 
 ### Unfinished:
-- create tables and load data into application database task
 - Selenium installation on Docker
 - AWS Redshift setup through terraform
 - Metabase setup for insights and visualization
 - load data into redshift database task
-- build application with AWS Lambda and other AWS tools
 
