@@ -49,18 +49,7 @@ def assemble_deck(deck):
     return deck_dict
 
 
-def find_cards(cursor, card_list):
-    query_list = [
-        f"SELECT * FROM Card WHERE name = '{card_list[i]}';" for i in range(len(card_list))]
-    cards_info = set()
-    for query in query_list:
-        cursor.execute(query)
-        cards_info.add(cursor.fetchone())
-
-    return cards_info
-
-
-def provide_advice(cursor, deck, cards_info, arch_id):
+def provide_advice(cursor, deck, arch_id):
     best_lvl_query = f"SELECT lvl FROM Deck WHERE archetype_id = '{arch_id}' ORDER BY lvl DESC LIMIT 1"
     cursor.execute(best_lvl_query)
     best_lvl = cursor.fetchone()[0]
@@ -72,10 +61,29 @@ def provide_advice(cursor, deck, cards_info, arch_id):
     rank_query = f"SELECT * FROM Deck WHERE archetype_id = '{arch_id}' AND rank = {best_rank} ORDER BY lvl DESC LIMIT 3"
 
     cursor.execute(lvl_query)
-    lvl_decks = cursor.fetchall()
+    lvl_decks_info = cursor.fetchall()
     cursor.execute(rank_query)
-    rank_decks = cursor.fetchall()
+    rank_decks_info = cursor.fetchall()
 
+    def get_cards_for_deck(decks):
+        named_decks = []
+        for d in decks:
+            deck_id = d[0]
+            get_cards_query = f"SELECT * FROM Cardcount WHERE deck_id = '{deck_id}'"
+            cursor.execute(get_cards_query)
+            cardcounts = cursor.fetchall()
+            named_deck = []
+            for card in cardcounts:
+                get_cardname_query = f"SELECT name FROM Card WHERE id = '{card[0]}'"
+                cursor.execute(get_cardname_query)
+                card_name = cursor.fetchone()[0]
+                card_count = card[1]
+                named_deck.append((card_name, card_count))
+            named_decks.append(named_deck)
+        return named_decks
+
+    lvl_decks = get_cards_for_deck(lvl_decks_info)
+    rank_decks = get_cards_for_deck(rank_decks_info)
     return [lvl_decks, rank_decks]
 
 
@@ -89,17 +97,13 @@ def main():
         "Input the cards and card counts in your deck. Format: card1; count1 // card2; count2 // etc.: ")
     deck = assemble_deck(deck_input)
 
-    card_list = [card for card in deck]
-
-    cards_info = find_cards(cursor, card_list)
-
     available_archs = get_archetypes(cursor)
     available_archs = "\n".join(available_archs)
     arch_input = input(
         f"What archetype does your deck belong to? Current available archetypes:\n{available_archs}\narchetype: ")
     arch_id = find_archetype(cursor, arch_input)
 
-    advice = provide_advice(cursor, deck, cards_info, arch_id)
+    advice = provide_advice(cursor, deck, arch_id)
     print(advice)
 
     cursor.close()
