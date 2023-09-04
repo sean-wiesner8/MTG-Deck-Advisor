@@ -10,11 +10,11 @@ config = dotenv_values(f"{curr_dir}/configuration.env")
 def create_conn():
     try:
         conn = psycopg2.connect(
-            host=config["redshift_rds_instance_endpoint"].split(":")[0],
-            port=config["redshift_rds_port"],
-            user=config["redshift_rds_username"],
+            host=config["redshift_host"].split(":")[0],
+            port=config["redshift_port"],
+            user=config["redshift_username"],
             password=config["rds_password"],
-            dbname=config["redshift_rds_database_name"],
+            dbname=config["redshift_database_name"],
         )
 
         return conn
