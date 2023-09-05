@@ -1,5 +1,3 @@
-CREATE EXTENSION IF NOT EXISTS aws_s3 CASCADE;
-
 CREATE TEMP TABLE Card_temp (LIKE Card);
 
 CREATE TEMP TABLE Color_temp (LIKE Color);
@@ -18,113 +16,43 @@ CREATE TEMP TABLE Deck_temp (LIKE Deck);
 
 CREATE TEMP TABLE CardCount_temp (LIKE CardCount);
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'Card_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'card_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY Card_temp
+FROM
+    's3://{bucket_name}/card_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'Color_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'color_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY Color_temp
+FROM
+    's3://{bucket_name}/color_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'CardColorJoin_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'card_color_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY CardColorJoin_temp
+FROM
+    's3://{bucket_name}/card_color_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'Keyword_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'keyword_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY Keyword_temp
+FROM
+    's3://{bucket_name}/keyword_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'CardKeywordJoin_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'card_keyword_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY CardKeywordJoin_temp
+FROM
+    's3://{bucket_name}/card_keyword_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'Prices_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'price_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY Prices_temp
+FROM
+    's3://{bucket_name}/price_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'Archetype_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'arch_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY Archetype_temp
+FROM
+    's3://{bucket_name}/arch_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'Deck_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'deck_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY Deck_temp
+FROM
+    's3://{bucket_name}/deck_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
 
-SELECT
-    aws_s3.table_import_from_s3(
-        'CardCount_temp',
-        '',
-        '(format csv, header true)',
-        '{s3_bucket}',
-        'cardcount_data.csv',
-        '{aws_region}',
-        '{aws_access_key_id}',
-        '{aws_secret_access_key}'
-    );
+COPY CardCount_temp
+FROM
+    's3://{bucket_name}/cardcount_data.csv' CREDENTIALS 'aws_access_key_id={aws_access_id};aws_secret_access_key={aws_secret_key}' IGNOREHEADER 1 DELIMITER ',' CSV;
+
+
 
 
 

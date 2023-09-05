@@ -37,10 +37,9 @@ def main():
 
     create_tables_query = prepare_query("create_tables")
     load_temp_tables_query = prepare_query("load_temp_tables").format(
-        s3_bucket=config["s3_bucket"],
-        aws_region=config["aws_region"],
-        aws_access_key_id=config["aws_access_key_id"],
-        aws_secret_access_key=config["aws_secret_access_key"],
+        bucket_name=config["s3_bucket"],
+        aws_access_id=config["aws_access_key_id"],
+        aws_secret_key=config["aws_secret_access_key"],
     )
     load_main_tables_query = prepare_query("load_main_tables")
 
