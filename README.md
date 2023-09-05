@@ -15,10 +15,10 @@
 - convert raw json data to prep data with tabular, relational SQL format with pandas
 - upload prep data to data lake task
 - create tables and load data into application database task
+- AWS Redshift setup through terraform
+- load data into redshift database task
 
 ### Unfinished:
 - Selenium installation on Docker
-- AWS Redshift setup through terraform
 - Metabase setup for insights and visualization
-- load data into redshift database task
 

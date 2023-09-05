@@ -15,11 +15,6 @@ with DAG(
     catchup=True,
 ) as dag:
 
-    # scrape_untapped_data = BashOperator(
-    #     task_id="scrape_untapped_data",
-    #     bash_command="chmod +x /opt/airflow/tasks/bash_scripts/scrape_untapped.sh && /opt/airflow/tasks/bash_scripts/scrape_untapped.sh ", do_xcom_push=True,
-    # )
-
     scrape_mtg_data = BashOperator(
         task_id="scrape_mtg_data",
         bash_command="python /opt/airflow/tasks/scraper_scripts/scrape_mtg.py ",
@@ -30,9 +25,9 @@ with DAG(
         bash_command="python /opt/airflow/tasks/scraper_scripts/scrape_mtgtop8.py ",
     )
 
-    upload_to_s3 = BashOperator(
-        task_id="upload_to_s3",
-        bash_command="python /opt/airflow/tasks/data_lake_upload.py ",
+    upload_to_s3_raw = BashOperator(
+        task_id="upload_to_s3_raw",
+        bash_command="python /opt/airflow/tasks/data_lake_upload.py raw ",
     )
 
     validate_data = BashOperator(
@@ -40,10 +35,15 @@ with DAG(
         bash_command="python /opt/airflow/tasks/validate.py ",
     )
 
+    upload_to_s3_prep = BashOperator(
+        task_id="upload_to_s3_prep",
+        bash_command="python /opt/airflow/tasks/data_lake_upload.py prep ",
+    )
+
 (
-    # scrape_untapped_data
     scrape_mtg_data
     >> scrape_mtgtop8_data
-    >> upload_to_s3
+    >> upload_to_s3_raw
     >> validate_data
+    >> upload_to_s3_prep
 )
