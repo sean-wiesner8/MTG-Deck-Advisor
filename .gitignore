@@ -190,3 +190,8 @@ dmypy.json
 #data files
 .standard_cards.json
 .example_deck_info.json
+# Default .gitignore content added by dbt Cloud
+target/
+dbt_packages/
+logs/
+# end dbt Cloud content
