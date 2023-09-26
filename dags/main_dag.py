@@ -40,10 +40,22 @@ with DAG(
         bash_command="python /opt/airflow/tasks/data_lake_upload.py prep ",
     )
 
+    rds_upload = BashOperator(
+        task_id="rds_upload",
+        bash_command="python /opt/airflow/tasks/rds_tasks/rds_upload.py ",
+    )
+
+    redshift_upload = BashOperator(
+        task_id="redshift_upload",
+        bash_command="python /opt/airflow/tasks/redshift_tasks/redshift_rds_upload.py ",
+    )
+
 (
     scrape_mtg_data
     >> scrape_mtgtop8_data
     >> upload_to_s3_raw
     >> validate_data
     >> upload_to_s3_prep
+    >> rds_upload
+    >> redshift_upload
 )
