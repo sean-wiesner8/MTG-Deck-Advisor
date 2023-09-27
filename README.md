@@ -8,6 +8,7 @@ Data architecture hosted on AWS and created with Terraform. Services utilized in
 - Redshift: Data warehouse which serves as the architecture for data modeling and storage. Soon will be accessed by an analytics page hosted on Metabase for long-term meta trend analysis. 
 
 ## Pipeline
+![Illustration of the data pipeline](/images/pipeline.png)
 Data pipeline orchestrated with Apache Airflow and containerized with Docker Compose. DAG steps:
 1. Scrape raw card data from Scryfall API
 2. Scrape raw tournament deck data from MTGTop8 with beautifulsoup4
