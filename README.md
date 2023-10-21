@@ -23,7 +23,7 @@ DAG steps:
 The application allows users to input their person deck information and receive comparisons between their deck and a number of decks (specified by the user) belonging to the same archetype that have performed well recently in tournaments.  
 
 ### Run Application
-First, run the commands:
+When in the main directory of the repository, run the commands:
 ```
 pipenv update
 pipenv shell
