@@ -12,9 +12,3 @@
 # Red Deck Wins
 # 3
 
-Mountain; 10
-Furnace Punisher; 4
-Khenra Spellspear // Gitaxian Spellstalker; 2
-*
-Red Deck Wins
-3

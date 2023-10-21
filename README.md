@@ -29,8 +29,8 @@ pipenv update
 pipenv shell
 ```
 These commands will install all required dependencies and activate the virtual environment.
-Next, create a valid .txt file named  `input.txt` in the `tasks/app_tasks` directory. 
-Format `input.txt`:
+Next, create a valid input into `input.txt` in the `tasks/app_tasks` directory. 
+Format of `input.txt`:
 - Any line that begins with a '#' character is considered to be a comment and is not considered by the program.
 - Empty lines are ignored.
 - Card input should be in the format "{card name}; {count}", where each card is separated by a new line.
