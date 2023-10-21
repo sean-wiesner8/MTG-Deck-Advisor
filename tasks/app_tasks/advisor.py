@@ -21,14 +21,6 @@ def create_conn():
         print(exception)
 
 
-def get_archetypes(cursor):
-    query = "SELECT name FROM Archetype"
-    cursor.execute(query)
-    raw_archs = cursor.fetchall()
-    archs = [arch[0] for arch in raw_archs]
-    return archs
-
-
 def find_archetype(cursor, arch):
     query = f"SELECT id FROM Archetype WHERE name = '{arch}'"
     cursor.execute(query)
@@ -37,10 +29,8 @@ def find_archetype(cursor, arch):
 
 
 def assemble_deck(deck):
-
-    formatted_deck = deck.split(" // ")
     deck_dict = {}
-    for card in formatted_deck:
+    for card in deck:
         formatted_card = card.split("; ")
         card_name = formatted_card[0]
         card_count = int(formatted_card[1])
@@ -49,62 +39,129 @@ def assemble_deck(deck):
     return deck_dict
 
 
-def provide_advice(cursor, deck, arch_id):
-    best_lvl_query = f"SELECT lvl FROM Deck WHERE archetype_id = '{arch_id}' ORDER BY lvl DESC LIMIT 1"
-    cursor.execute(best_lvl_query)
-    best_lvl = cursor.fetchone()[0]
-    best_rank_query = f"SELECT rank FROM Deck WHERE archetype_id = '{arch_id}' ORDER BY rank ASC LIMIT 1"
-    cursor.execute(best_rank_query)
-    best_rank = cursor.fetchone()[0]
+def parse_input(input):
+    deck_list = []
+    line_num = 0
+    line = input[line_num]
+    while line[0] != '*':
+        if line[0] != '#' and line != '\n':
+            deck_list.append(line)
+        line_num += 1
+        line = input[line_num]
 
-    lvl_query = f"SELECT * FROM Deck WHERE archetype_id = '{arch_id}' AND lvl = {best_lvl} ORDER BY rank ASC LIMIT 3"
-    rank_query = f"SELECT * FROM Deck WHERE archetype_id = '{arch_id}' AND rank = {best_rank} ORDER BY lvl DESC LIMIT 3"
+    formatted_deck = assemble_deck(deck_list)
+    line_num += 1
+    archetype = input[line_num][:-1]
+    line_num += 1
+    limit = input[line_num]
 
-    cursor.execute(lvl_query)
-    lvl_decks_info = cursor.fetchall()
-    cursor.execute(rank_query)
-    rank_decks_info = cursor.fetchall()
+    return (formatted_deck, archetype, limit)
 
-    def get_cards_for_deck(decks):
-        named_decks = []
-        for d in decks:
-            deck_id = d[0]
-            get_cards_query = f"SELECT * FROM Cardcount WHERE deck_id = '{deck_id}'"
-            cursor.execute(get_cards_query)
-            cardcounts = cursor.fetchall()
-            named_deck = []
-            for card in cardcounts:
-                get_cardname_query = f"SELECT name FROM Card WHERE id = '{card[0]}'"
-                cursor.execute(get_cardname_query)
-                card_name = cursor.fetchone()[0]
-                card_count = card[1]
-                named_deck.append((card_name, card_count))
-            named_decks.append(named_deck)
-        return named_decks
 
-    lvl_decks = get_cards_for_deck(lvl_decks_info)
-    rank_decks = get_cards_for_deck(rank_decks_info)
-    return [lvl_decks, rank_decks]
+def get_best_decks(arch_id, cursor, limit):
+    query = f"SELECT id FROM deck WHERE archetype_id = '{arch_id}' ORDER BY rank LIMIT {limit}"
+    cursor.execute(query)
+    raw_ids = cursor.fetchall()
+    decks = {}
+    for raw_id in raw_ids:
+        decks[raw_id[0]] = {}
+
+    for id in decks:
+        cardcount_query = f"SELECT card_id, count FROM cardcount WHERE deck_id = '{id}'"
+        cursor.execute(cardcount_query)
+        raw_deck_data = cursor.fetchall()
+        for card_id, count in raw_deck_data:
+            cardname_query = f"SELECT name FROM card WHERE id = '{card_id}'"
+            cursor.execute(cardname_query)
+            card_name = cursor.fetchone()[0]
+            decks[id][card_name] = int(count)
+
+    return decks
+
+
+def find_differences(user_deck, online_deck):
+    shared_cards = []
+    user_only_cards = []
+    online_only_cards = []
+
+    for card in user_deck:
+        if card not in online_deck:
+            user_only_cards.append((card, user_deck[card]))
+        elif user_deck[card] <= online_deck[card]:
+            shared_cards.append((card, user_deck[card]))
+        else:
+            diff = user_deck[card] - online_deck[card]
+            shared_cards.append((card, online_deck[card]))
+            user_only_cards.append((card, diff))
+
+    for card in online_deck:
+        if card not in user_deck:
+            online_only_cards.append((card, online_deck[card]))
+        elif online_deck[card] > user_deck[card]:
+            diff = online_deck[card] - user_deck[card]
+            online_only_cards.append((card, diff))
+
+    return (shared_cards, user_only_cards, online_only_cards)
+
+
+def get_deck_info(deck_id, cursor):
+    deck_info_query = f"SELECT author, event_name, rank, date_used FROM deck WHERE id = '{deck_id}'"
+    cursor.execute(deck_info_query)
+    deck_info = cursor.fetchone()
+    deck_info_dict = {
+        "author": deck_info[0], "event": deck_info[1], "rank": deck_info[2], "date": deck_info[3]}
+
+    return deck_info_dict
 
 
 def main():
-
     conn = create_conn()
     cursor = conn.cursor()
 
-    print("Hello, welcome to the MTG - Deck Advisor.\n")
-    deck_input = input(
-        "Input the cards and card counts in your deck. Format: card1; count1 // card2; count2 // etc.: ")
-    deck = assemble_deck(deck_input)
+    with open('app_tasks/input.txt') as f:
+        input_data = f.readlines()
 
-    available_archs = get_archetypes(cursor)
-    available_archs = "\n".join(available_archs)
-    arch_input = input(
-        f"What archetype does your deck belong to? Current available archetypes:\n{available_archs}\narchetype: ")
-    arch_id = find_archetype(cursor, arch_input)
+    formatted_deck, archetype, limit = parse_input(input_data)
+    arch_id = find_archetype(cursor, archetype)
 
-    advice = provide_advice(cursor, deck, arch_id)
-    print(advice)
+    best_decks = get_best_decks(arch_id, cursor, limit)
+
+    with open('app_tasks/output.txt', 'w') as f:
+        for i, deck_id in enumerate(best_decks):
+            deck_info = get_deck_info(deck_id, cursor)
+            author = deck_info["author"]
+            event = deck_info["event"]
+            rank = deck_info["rank"]
+            date = deck_info["date"]
+            f.write(f"Deck {i+1}:\n")
+            f.write(f"Author: {author}\n")
+            f.write(f"Event: {event}\n")
+            f.write(f"Rank: {rank}\n")
+            f.write(f"Date: {date}\n\n")
+
+            shared, user_only, online_only = find_differences(
+                formatted_deck, best_decks[deck_id])
+
+            f.write("Cards contained in both decks:\n")
+            for card in shared:
+                name = card[0]
+                count = card[1]
+                f.write(f"{name}, {count}\n")
+            f.write("\n")
+
+            f.write("Cards contained in your deck only:\n")
+            for card in user_only:
+                name = card[0]
+                count = card[1]
+                f.write(f"{name}, {count}\n")
+            f.write("\n")
+
+            f.write(f"Cards contained in {author}'s deck only:\n")
+            for card in online_only:
+                name = card[0]
+                count = card[1]
+                f.write(f"{name}, {count}\n")
+            f.write("\n***\n\n")
 
     cursor.close()
     conn.close()

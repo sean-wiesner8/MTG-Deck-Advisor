@@ -11,6 +11,7 @@ pyperclip = "*"
 boto3 = "*"
 python-dotenv = "*"
 pydantic = "*"
+psycopg2-binary = "*"
 
 
 [requires]

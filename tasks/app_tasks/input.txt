@@ -1,0 +1,20 @@
+# Format: Any line that begins with a '#' character is considered to be a comment and is not considered by the program.
+# Empty lines are ignored.
+# Card input should be in the format "{card name}; {count}", where each card is separated by a new line.
+# A line consisting of a single '*' character signals the end of the deck input. 
+# The following line of the input is the name of the archetype that your deck belongs to.
+# The final line of the input is an integer representing the number of decks you would like the program to output.
+# Example: Deck containing three distinct cards (remove comment signals)
+# Mountain; 10
+# Furnace Punisher; 4
+# Khenra Spellspear // Gitaxian Spellstalker; 2
+# *
+# Red Deck Wins
+# 3
+
+Mountain; 10
+Furnace Punisher; 4
+Khenra Spellspear // Gitaxian Spellstalker; 2
+*
+Red Deck Wins
+3

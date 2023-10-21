@@ -1,0 +1,90 @@
+Deck 1:
+Author: ura_frst
+Event: MTGO Challenge 32
+Rank: 1
+Date: 20/08/23
+
+Cards contained in both decks:
+Mountain, 10
+
+Cards contained in your deck only:
+Furnace Punisher, 4
+Khenra Spellspear // Gitaxian Spellstalker, 2
+
+Cards contained in ura_frst's deck only:
+Mishra's Foundry, 4
+Mountain, 7
+Sokenzan, Crucible of Defiance, 1
+Bloodthirsty Adversary, 4
+Feldon, Ronom Excavator, 3
+Monastery Swiftspear, 4
+Phoenix Chick, 4
+Squee, Dubious Monarch, 3
+Lightning Strike, 4
+Nahiri's Warcrafting, 4
+Play with Fire, 4
+Strangle, 4
+Kumano Faces Kakkazan // Etching of Kumano, 4
+
+***
+
+Deck 2:
+Author: joaoclaudioms
+Event: MTGO Preliminary
+Rank: 1
+Date: 23/08/23
+
+Cards contained in both decks:
+Mountain, 10
+Furnace Punisher, 4
+
+Cards contained in your deck only:
+Khenra Spellspear // Gitaxian Spellstalker, 2
+
+Cards contained in joaoclaudioms's deck only:
+Mishra's Foundry, 4
+Mountain, 7
+Sokenzan, Crucible of Defiance, 2
+Bloodthirsty Adversary, 4
+Falkenrath Pit Fighter, 2
+Feldon, Ronom Excavator, 3
+Monastery Swiftspear, 4
+Phoenix Chick, 2
+Thundering Raiju, 4
+Lightning Strike, 4
+Play with Fire, 4
+Strangle, 2
+Kumano Faces Kakkazan // Etching of Kumano, 4
+
+***
+
+Deck 3:
+Author: Nitta Shinya
+Event: Summer Thanksgiving Tournaments
+Rank: 1
+Date: 20/08/23
+
+Cards contained in both decks:
+Mountain, 10
+Furnace Punisher, 3
+
+Cards contained in your deck only:
+Furnace Punisher, 1
+Khenra Spellspear // Gitaxian Spellstalker, 2
+
+Cards contained in Nitta Shinya's deck only:
+Mishra's Foundry, 4
+Mountain, 7
+Sokenzan, Crucible of Defiance, 2
+Bloodthirsty Adversary, 4
+Feldon, Ronom Excavator, 3
+Monastery Swiftspear, 4
+Riveteers Requisitioner, 4
+Lightning Strike, 4
+Nahiri's Warcrafting, 3
+Play with Fire, 4
+Invasion of Regatha // Disciples of the Inferno, 4
+Kumano Faces Kakkazan // Etching of Kumano, 4
+
+***
+
