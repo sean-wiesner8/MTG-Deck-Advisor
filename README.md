@@ -20,7 +20,7 @@ DAG steps:
 7. Load data into data warehouse (AWS Redshift).
 
 ## Application
-The application allows a user to input their person deck information and receive comparisons between their deck and a number of decks (specified by the user) that have performed well recently in tournaments belonging to the same archetype.  
+The application allows a user to input their person deck information and receive comparisons between their deck and a number of decks (specified by the user) belonging to the same archetype that have performed well recently in tournaments.  
 
 ### Run Application
 
