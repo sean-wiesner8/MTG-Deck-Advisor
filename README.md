@@ -29,7 +29,7 @@ pipenv update
 pipenv shell
 ```
 These commands will install all required dependencies and activate the virtual environment.
-Next, create a valid .txt file in the `tasks/app_tasks` directory. 
+Next, create a valid .txt named  `input.txt` file in the `tasks/app_tasks` directory. 
 Format of .txt file:
 - Any line that begins with a '#' character is considered to be a comment and is not considered by the program.
 - Empty lines are ignored.
