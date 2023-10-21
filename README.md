@@ -20,17 +20,15 @@ DAG steps:
 7. Load data into data warehouse (AWS Redshift).
 
 ## Application
-The application allows a user to input their person deck information and receive comparisons between their deck and a number of decks (specified by the user) belonging to the same archetype that have performed well recently in tournaments.  
+The application allows users to input their person deck information and receive comparisons between their deck and a number of decks (specified by the user) belonging to the same archetype that have performed well recently in tournaments.  
 
 ### Run Application
-
 First, run the commands:
 ```
 pipenv update
 pipenv shell
 ```
 These commands will install all required dependencies and activate the virtual environment.
-
 Next, create a valid .txt file in the `tasks/app_tasks` directory. 
 Format of .txt file:
 - Any line that begins with a '#' character is considered to be a comment and is not considered by the program.
@@ -48,8 +46,7 @@ Khenra Spellspear // Gitaxian Spellstalker; 2
 Red Deck Wins
 3
 ```
-
-Once the input file has been created, simple run the commands:
+Once the input file has been created, run the commands:
 ```
 cd tasks
 python3 app_tasks/advisor.py
@@ -148,8 +145,6 @@ Kumano Faces Kakkazan // Etching of Kumano, 4
 ***
 
 ```
-
-
 
 ## Coming Soon
 There are a number of new features that I will be adding to the pipeline soon:
