@@ -29,10 +29,9 @@ pipenv update
 pipenv shell
 ```
 These commands will install all required dependencies and activate the virtual environment.
-Next, create a valid input into `input.txt` in the `tasks/app_tasks` directory. 
+Next, create a valid input by modifying `input.txt` in the `tasks/app_tasks` directory. 
 Format of `input.txt`:
-- Any line that begins with a '#' character is considered to be a comment and is not considered by the program.
-- Empty lines are ignored.
+- Lines beginning with a '#' character and empty lines are ignored.
 - Card input should be in the format "{card name}; {count}", where each card is separated by a new line.
 - A line consisting of a single '*' character signals the end of the deck input. 
 - The following line of the input is the name of the archetype that your deck belongs to.
