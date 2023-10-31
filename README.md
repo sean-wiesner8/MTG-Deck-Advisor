@@ -45,7 +45,7 @@ Khenra Spellspear // Gitaxian Spellstalker; 2
 Red Deck Wins
 3
 ```
-Once the input file has been created, run the commands:
+Once the input file has been modified, run the commands:
 ```
 cd tasks
 python3 app_tasks/advisor.py
