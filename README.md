@@ -1,5 +1,5 @@
 # Magic The Gathering - Deck Advisor
-Python based data pipeline orchestrated with Apache Airfow and containerized with Docker Compose, serving the purpose of simplifying the competitive deck construction process in the popular collectible card game Magic: The Gathering. Tournament deck data scraped from [MTGTop8](https://mtgtop8.com/) and card data scraped from the [Scryfall API](https://scryfall.com/).
+Python based ELT data pipeline orchestrated with Apache Airfow and containerized with Docker Compose, serving the purpose of simplifying the competitive deck construction process in the popular collectible card game Magic: The Gathering. Tournament deck data scraped from [MTGTop8](https://mtgtop8.com/) and card data scraped from the [Scryfall API](https://scryfall.com/).
 
 ## Architecture
 Data architecture hosted on AWS and created with Terraform. Services utilized in this pipeline include:
