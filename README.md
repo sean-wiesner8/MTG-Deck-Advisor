@@ -24,7 +24,10 @@ The application allows users to input their person deck information and receive 
 
 ### Run Application
 Note: The application is still under development, so it can only be run if you have your own AWS infrastructure set up. This will be updated in the near future.
-When in the main directory of the repository, run the commands:
+
+First, to retrieve your AWS credentials, run the command `bash generate_config.sh` in the main directory. This will add your credentials to your environment variables in the `.env` file.
+
+Next, run the commands:
 ```
 pipenv update
 pipenv shell
